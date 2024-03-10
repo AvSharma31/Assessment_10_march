@@ -1,0 +1,24 @@
+def create_output_dict(input_dict, current_path=None):
+    if current_path is None:
+        current_path = []
+
+    output_dict = {}
+
+    for key, value in input_dict.items():
+        new_path = current_path + [key]
+        if isinstance(value, dict):
+            child_dict = create_output_dict(value, new_path)
+            output_dict[key] = list(child_dict.keys())
+            output_dict.update(child_dict)
+        else:
+            output_dict[key] = [value]
+
+    return output_dict
+
+# Example usage with the provided input_dict
+input_dict = {"abc":{"def":{"ghi":{"jkl":{"mno":{"pqr":{"stu":{"vwx":{"yz":"you are finally here !!!"}}}}}}}}}
+output_dict = create_output_dict(input_dict)
+
+# Print the resulting output_dict
+for key, value in output_dict.items():
+    print(f"{key}: {value}")
